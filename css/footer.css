@@ -1,8 +1,8 @@
-body {
-    padding-top: 50px; /* Whatever the height of your navbar is; the
-                             default is 50px */
-}
 h1, h2, h3, h4, h5, h6 {
+  margin:0px;
+}
+.navbar {
+    margin-bottom: 0;
 }
 section {
     padding: 60px 0;
