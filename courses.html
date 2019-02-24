@@ -19,9 +19,35 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/courses.js"></script>
-  </head>
-  <body>
+    <style>
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
 
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  </style>
+  </head>
+  <body onload="load_data()">
+    <div id="loader" style="position:absolute;margin:300px 0% 0% 47%">
+      <div class="loader"></div>
+      <br>
+      <p style="text-align: center;color:#fff">Connecting to<br>Amazon Database<br>N. Virginia</p>
+    </div>
     <!-- Navbar Start -->
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
@@ -31,7 +57,7 @@
         <ul class="nav navbar-nav">
           <li><a href="index.html">Home</a></li>
           <li class="active"><a href="#">Courses</a></li>
-          <li><a href="#">About Us</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">My Account <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Sign Up</a></li>
@@ -79,6 +105,7 @@
   </body>
   <script>
     var n;
+    function load_data() {
     $.ajax({
       type:"GET",
       url: "https://sigmaclasses.herokuapp.com/coursesize",
@@ -88,6 +115,7 @@
       },
       async:false
     });
+  }
 
     function index(n) {
       for(var i=1; i<=n; i++) {
@@ -100,7 +128,10 @@
           },
           async:false
         });
-    }}
+
+    }
+    $("#loader").hide()
+  }
 
     function text( name, i) {
       $.ajax({
@@ -117,5 +148,8 @@
       var article = "<article class=\"white-panel\"><img src=\"img/courses/"+(i%9)+".jpg\" alt=\"\"><h3><a href=\"#\"><strong>"+name+"</strong></a></h3>"+data+"</article>"
       $('section').append(article)
     }
+
+
+
   </script>
 </html>
