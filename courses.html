@@ -1,0 +1,121 @@
+<html>
+  <head>
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333a51">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333a51">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#333a51">
+    <title>Sigma Classes</title>
+
+    <title>Sigma Classes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link href="css/courses.css" rel="stylesheet" >
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/courses.js"></script>
+  </head>
+  <body>
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">S i g m a</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Home</a></li>
+          <li class="active"><a href="#">Courses</a></li>
+          <li><a href="#">About Us</a></li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">My Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Sign Up</a></li>
+              <li><a href="#">Log In</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="container">
+      <div class="row">
+        <hr>
+        <section id="pinBoot">
+
+          <!-- <article class="white-panel">
+            <img src="img/courses/1.jpg" alt="">
+            <h3><a href="#"><strong>JEE Mains</strong></a></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+              irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </article> -->
+
+        </section>
+        <hr>
+      </div>
+    </div>
+    <!-- main-footer end -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row" style="margin-left:5px">
+                <div class="pull-left">
+                    <div class="copyright"><a href="#">sramako</a> &copy; 2019</div>
+                </div>
+                <div class="pull-right">
+                    <ul class="footer-nav">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy&nbsp&nbsp&nbsp&nbsp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Footer -->
+  </body>
+  <script>
+    var n;
+    $.ajax({
+      type:"GET",
+      url: "https://sigmaclasses.herokuapp.com/coursesize",
+      success: function( data ){
+        n = data;
+        index(n);
+      },
+      async:false
+    });
+
+    function index(n) {
+      for(var i=1; i<=n; i++) {
+        console.log("i="+i);
+        $.ajax({
+          url: "https://sigmaclasses.herokuapp.com/coursename?index="+i,
+          success: function( name ){
+            console.log(i)
+            text(name, i)
+          },
+          async:false
+        });
+    }}
+
+    function text( name, i) {
+      $.ajax({
+        url: "https://sigmaclasses.herokuapp.com/coursetext?index="+i,
+        success: function( data ){
+          console.log("text called:"+i)
+          push( name, data, i )
+        },
+        async:false
+    })}
+
+    function push(name, data, i) {
+      console.log("Pushed:"+i);
+      var article = "<article class=\"white-panel\"><img src=\"img/courses/"+(i%9)+".jpg\" alt=\"\"><h3><a href=\"#\"><strong>"+name+"</strong></a></h3>"+data+"</article>"
+      $('section').append(article)
+    }
+  </script>
+</html>
